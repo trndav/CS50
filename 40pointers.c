@@ -11,6 +11,10 @@ int main(void)
     printf("Type first word: ");
     scanf("%s", word2);
     printf("Word 1: %s, word 2: %s.\n", word1, word2);
+    printf("First address: %p: \n ", word1);
+    printf("Second address: %p: \n ", word2);
+
+    // Compare strings
     if (strcmp(word1, word2) == 0)
     {
         printf("Words are same.");
