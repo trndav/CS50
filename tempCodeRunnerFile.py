@@ -1,12 +1,3 @@
-
-# x = int(input("Type number of blocks: "))
-# for i in range(x):
-#     print("#")
-
-# while True:
-#     x = int(input("Type number of blocks: "))
-#     if x > 0:
-#         break
-
-# for i in range(x):
-#     print("#")
+    # else:
+    #     ec10 = roundchange / 0.1
+    #     print(ec10)
