@@ -27,3 +27,38 @@ int main(void)
         lamas = lamas + birth - dead;
     } while ( lamas < goal ); 
 }
+
+// #include <cs50.h>
+// #include <stdio.h>
+
+// int main(void)
+// {
+//     // TODO: Prompt for start size
+//     long lamas;
+//     long goal;
+//     long year = 0;
+//     do
+//     {
+//         lamas = get_int("Start size: ");
+//     }
+//     while (lamas < 9);
+//         // printf("You have %li lamas.\n", lamas);
+
+//     // TODO: Prompt for end size
+//     do
+//     {
+//         goal = get_int("End size: ");
+//     }
+//     while ( goal < lamas );
+//         // printf("Goal is %li lamas.\n", goal);
+//     do
+//     {
+//         long birth = (lamas * 1/3);
+//         long dead = (lamas * 1/4);
+//         year++;
+//         lamas = lamas + birth - dead;
+//     }
+//     while ( lamas < goal );
+
+//     printf("Years: %li \n", year);
+// }
