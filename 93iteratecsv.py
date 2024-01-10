@@ -53,6 +53,19 @@ import csv
 #     print(f"{counteritem}: {count[counteritem]}")
 
 # Using Counter() to count row items
+# from collections import Counter
+# with open("testcsv.csv") as file:
+#     read = csv.DictReader(file) # Anlyzes header - first line (each row is dictionary)
+#     count = Counter()
+#     for roworline in read:
+#         counteritem = roworline["language"]
+#         count[counteritem] += 1
+
+# # Shorter with collections - Counter
+# for counteritem, count in count.most_common():
+#     print(f"{counteritem}: {count}")
+
+# Search language count by prompting for language
 from collections import Counter
 with open("testcsv.csv") as file:
     read = csv.DictReader(file) # Anlyzes header - first line (each row is dictionary)
@@ -61,6 +74,5 @@ with open("testcsv.csv") as file:
         counteritem = roworline["language"]
         count[counteritem] += 1
 
-# Shorter with collections - Counter
-for counteritem, count in count.most_common():
-    print(f"{counteritem}: {count}")
+counteritem = input("Language: ")
+print(f"{counteritem}: {count[counteritem]}")
