@@ -1,0 +1,17 @@
+    .centered
+    {                
+        text-align: center;
+    }
+    .large
+    {
+        color: blue;
+        font-size: large;
+    }
+    .medium
+    {
+        font-size: medium;
+    }
+    .small
+    {
+        font-size: small;
+    }

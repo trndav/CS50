@@ -9,5 +9,6 @@
 -- SELECT title FROM books JOIN author on books.id = author.id WHERE author = 'Bob';
 -- SELECT author FROM author WHERE id = (SELECT id FROM books WHERE title = 'Teske boje');
 -- SELECT books.title, rating, author.author FROM books JOIN author ON author.id = books.id WHERE author.author = "Bomb";
--- SELECT AVG(rating) from books JOIN author ON author.id = books.id WHERE author.author = 'Bob';
-SELECT author FROM author WHERE author LIKE '%&%'; -- % Match any character
+-- SELECT AVG(rating) FROM books JOIN author ON author.id = books.id WHERE author.author = 'Bob';
+-- SELECT author FROM author WHERE author LIKE '%&%'; -- % Match any character
+UPDATE books SET title = 'Bila jednom dva zmaja' WHERE title = 'Bio jednom jedan zmaj';

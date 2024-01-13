@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<!-- Demonstrates DOMContentLoaded -->
+
+<html lang="en">
+    <head>
+        <script>
+
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('form').addEventListener('submit', function(event) {
+                    alert('Hi, ' + document.querySelector('#name').value + '! Nice to have you here!');
+                    event.preventDefault();
+                });
+            });
+
+        </script>
+        <title>CS50 JS</title>
+    </head>
+    <body>
+        <form>
+            <input autocomplete="on" autofocus id="name" placeholder="Name" type="text">
+            <input type="submit">
+        </form>
+    </body>
+</html>
