@@ -1,0 +1,25 @@
+table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+td {
+    border: 2px solid black;
+}
+#score1 {
+    color: red;
+}            
+#score2 {
+    color: blue;
+}
+p {
+    text-align: center;
+}
+.team {
+    background-color: yellow;
+}
+#add1, #add2 {
+    background-color: goldenrod;
+}
