@@ -1,0 +1,9 @@
+{% extends "147layout.html" %}
+{% block body %}
+    <h2>We found this in our database:</h2>
+    <ul>
+        {% for show in shows %}
+            <li>{{ show["title"] }} | {{ show["year"] }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

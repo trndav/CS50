@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}
+    Post
+{% endblock %}
+
+<!-- Content here -->
+{% block main %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2>Create a Post</h2>
+            <form method="POST" action="/post">
+                <div class="form-group">        
+                    <label for="exampleFormControlInput1">Post title</label>
+                    <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+                </div>
+                <div class="form-group" class="col-sm-8">
+                    <label for="exampleFormControlTextarea1">Post content</label>
+                    <textarea class="form-control" name="text" id="exampleFormControlTextarea1" rows="3"></textarea> 
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
