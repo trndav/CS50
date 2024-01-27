@@ -12,12 +12,15 @@
         <div class="card" style="width: 50rem;">
             <div class="card-body border border-dark rounded">
             <h5 class="card-title">{{ post.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ post.time }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Posted by: {{ username }} at {{ post.time }}</h6>
             <p class="card-text">{{ post.post }}</p>
+
+            {% if is_user_admin %}   
             <form class="d-flex" action="/delete/{{ post.id }}" method="POST">
-                <button type="submit" class="btn btn-secondary btn-sm me-5">Edit</button><span>&nbsp;</span>
+                <button type="submit" class="btn btn-secondary btn-sm me-5">Edit</button><span>&nbsp;</span>           
                 <button type="submit" class="btn btn-dark btn-sm">Delete</button>
-            </form>            
+            </form>    
+            {% endif %}        
             </div>
         </div>
     </div>

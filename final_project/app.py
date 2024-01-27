@@ -7,7 +7,7 @@ from helpers import login_required
 from datetime import datetime
 
 # Configure application
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -24,19 +24,27 @@ db = SQL("sqlite:///users.db")
 def index():
 
     logged_in = "user_id" in session
-    if logged_in:
-
-        # Get username of logged user
-        result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-        username = result[0]['username']
-    else:
-        username = None
 
     # Get all posts from the database
     posts = db.execute("SELECT * FROM posts")
 
+    if logged_in:
+        
+        # Check if user is admin
+        is_user_admin = is_admin(session.get("user_id"))
+
+        # Get username of logged user
+        result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        username = result[0]['username']
+        return render_template("index.html", message="", logged_in=logged_in, posts=posts, username=username, is_user_admin=is_user_admin)
+    else:
+        is_user_admin = False        
+        raw_username = db.execute("SELECT username FROM users JOIN posts ON users.id = posts.user_id WHERE posts.user_id = users.id")
+        if raw_username:
+            username = raw_username[0]['username']
+
     # If index.html request is GET
-    return render_template("index.html", message="", logged_in=logged_in, username=username, posts=posts)
+    return render_template("index.html", message="", logged_in=logged_in, username=username, posts=posts, is_user_admin=is_user_admin)
 
 # Register.html
 @app.route("/register", methods=["GET", "POST"])
@@ -99,7 +107,6 @@ def login():
         username = result[0]['username']
 
         # Redirect logged user to homepage
-        # return render_template("index.html", message="You are logged in.", logged_in=logged_in, username=username)
         return redirect(url_for("index"))
 
     # If login request is GET 
@@ -143,14 +150,23 @@ def post():
 @app.route("/delete/<int:post_id>", methods=["POST"])
 def delete(post_id):
 
-    #logged_in = "user_id" in session
-
-    # Get username of logged user
-    #result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    #username = result[0]['username']
-
     if request.method == "POST":
         # Delete the post with the given post_id from the database
         db.execute("DELETE FROM posts WHERE id = ?", post_id)
         return redirect(url_for("index"))
-        # return render_template("index.html", message="Post deleted.", username=username, logged_in=logged_in)
+
+# Check if user is admin
+def is_admin(user_id):    
+    result = db.execute("SELECT admin FROM posts WHERE id = :user_id", user_id=user_id)
+    return result[0]['admin'] == 1 if result else False
+
+# Readme page
+@app.route("/readme")
+def readme():
+    logged_in = "user_id" in session
+
+    # Get username of logged user
+    result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+    username = result[0]['username']
+
+    return render_template("readme.html", username=username, logged_in=logged_in)
