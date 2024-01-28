@@ -5,6 +5,7 @@ from cs50 import SQL
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
 from datetime import datetime
+from flask_login import current_user
 
 # Configure application
 app = Flask(__name__, static_folder='static')
@@ -24,9 +25,11 @@ db = SQL("sqlite:///users.db")
 def index():
 
     logged_in = "user_id" in session
+    user_id = session.get("user_id")
 
     # Get all posts from the database
-    posts = db.execute("SELECT * FROM posts")
+    posts = db.execute("SELECT * FROM posts ORDER BY id DESC")
+    usr = session.get("user_id")    
 
     if logged_in:
         
@@ -36,7 +39,7 @@ def index():
         # Get username of logged user
         result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
         username = result[0]['username']
-        return render_template("index.html", message="", logged_in=logged_in, posts=posts, username=username, is_user_admin=is_user_admin)
+        return render_template("index.html", message="", logged_in=logged_in, posts=posts, usr=usr, username=username, is_user_admin=is_user_admin, current_user=current_user)
     else:
         is_user_admin = False        
         raw_username = db.execute("SELECT username FROM users JOIN posts ON users.id = posts.user_id WHERE posts.user_id = users.id")
@@ -44,7 +47,7 @@ def index():
             username = raw_username[0]['username']
 
     # If index.html request is GET
-    return render_template("index.html", message="", logged_in=logged_in, username=username, posts=posts, is_user_admin=is_user_admin)
+    return render_template("index.html", message="", logged_in=logged_in, username=username, usr=usr, posts=posts, is_user_admin=is_user_admin, current_user=current_user)
 
 # Register.html
 @app.route("/register", methods=["GET", "POST"])
@@ -170,3 +173,27 @@ def readme():
     username = result[0]['username']
 
     return render_template("readme.html", username=username, logged_in=logged_in)
+
+# Create edit.html
+@app.route("/edit/<int:post_id>", methods=["GET", "POST"])
+def edit(post_id): 
+
+    # Open edit page with post content
+    if request.method == "GET":
+        post = db.execute("SELECT * FROM posts WHERE id = :post_id", post_id=post_id)
+        if not post:
+            return render_template("index.html", message="Post not found")
+        
+        if post[0]["user_id"] != session["user_id"]:
+            return render_template("index.html", message="You cant edit that post.")
+        return render_template("edit.html", post=post[0])
+        
+    else:
+        # Update the edited post in the database
+        title = request.form.get("title")
+        post_text = request.form.get("post")  
+        post = db.execute("SELECT * FROM posts WHERE id = :post_id", post_id=post_id)      
+        db.execute("UPDATE posts SET title = :title, post = :post WHERE id = :post_id",
+            title=title, post=post_text, post_id=post_id)
+
+        return render_template("edit.html", post=post[0], message="Post successfully edited.")

@@ -22,14 +22,25 @@
             <p>Create posts</p>
             <p>Delete posts</p>
             <p>Edit posts</p>
+            <p>Bootstrap menu and footer</p>
 
-            <p></p>
             <p>CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
                 username TEXT NOT NULL, hash TEXT NOT NULL);</p>
 
             <p>CREATE TABLE posts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             user_id INTEGER NOT NULL, title TEXT NOT NULL, post TEXT NOT NULL,
             time DATE, admin INTEGER DEFAULT 0, FOREIGN KEY (user_id) REFERENCES users (id));</p>
+            
+            <p>
+            from flask import Flask, render_template, session, request, redirect, url_for
+            from flask_session import Session
+            from cs50 import SQL
+            from werkzeug.security import check_password_hash, generate_password_hash
+            from helpers import login_required
+            from datetime import datetime
+            from flask_login import current_user</p>
+
+            <p>{ % if is_user_admin % }  { % endif % }</p>  
         </div>
     </div>
 </div>

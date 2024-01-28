@@ -9,6 +9,7 @@ html {
   }
   .footer {
     position: absolute;
+    text-align: center;
     bottom: 0;
     width: 100%;
     height: 60px; /* Set the fixed height of the footer here */
