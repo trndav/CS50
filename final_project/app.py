@@ -168,9 +168,13 @@ def is_admin(user_id):
 def readme():
     logged_in = "user_id" in session
 
-    # Get username of logged user
-    result = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    username = result[0]['username']
+    if logged_in:
+        # Get username of logged user
+        user_id = session["user_id"]
+        result = db.execute("SELECT username FROM users WHERE id = ?", user_id)
+        username = result[0]['username']
+    else:
+        username = None
 
     return render_template("readme.html", username=username, logged_in=logged_in)
 
